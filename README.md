@@ -1,5 +1,7 @@
 # Windows 向け WebRTC ライブラリ用ビルドツール
 
+- Windows 10 Pro または Windows サーバが必要
+
 ## Docker の設定
 
 `Switch to Windows container...` を選択して Windows コンテナを使うようにする。
