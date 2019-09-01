@@ -3,7 +3,7 @@ version: "3.5"
 services:
   webrtc:
     build:
-      context: webrtc
+      context: .
       args:
         WEBRTC_VERSION: "75"
         WEBRTC_COMMIT: "159c16f3ceea1d02d08d51fc83d843019d773ec6"
