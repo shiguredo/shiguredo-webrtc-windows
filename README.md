@@ -41,7 +41,7 @@ DNS の設定をするのが重要。
 
 ## webrtc.lib のビルド
 
-`.\build.bat` を実行してください。これで webrtc.lib が生成されます。
+`.\build.bat` を実行してください。これで `debug\webrtc.lib` と `release\webrtc.lib` が生成されます。
 
 ## エラーログの取得
 
