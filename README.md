@@ -43,11 +43,6 @@ DNS の設定をするのが重要。
 
 `.\build.bat` を実行してください。これで `debug\webrtc.lib` と `release\webrtc.lib` が生成されます。
 
-- debug/webrtc.lib
-    - デバッグ用ライブラリです
-- release/webrtc.lib
-    - リリース用ライブラリです
-
 ## エラーログの取得
 
 Visual Studio のインストールに失敗した場合、`C:\vslogs.zip` にエラーログがあるので、[インストールの失敗の診断](https://docs.microsoft.com/ja-jp/visualstudio/install/advanced-build-tools-container?view=vs-2019#diagnosing-install-failures) を参考にコンテナから取り出して確認する。
