@@ -73,6 +73,10 @@ RUN ninja -C C:\webrtc\build_debug
 RUN cd webrtc\src; gn gen ..\build_release --args='is_debug=false rtc_include_tests=false rtc_use_h264=false is_component_build=false use_rtti=true'
 RUN ninja -C C:\webrtc\build_release
 
+# ヘッダーファイルを集約
+RUN mkdir include
+RUN robocopy c:\webrtc\src c:\include *.h *.hpp /S; exit 0
+
 SHELL ["cmd", "/C"]
 
 ENTRYPOINT C:\BuildTools\Common7\Tools\VsDevCmd.bat &&
