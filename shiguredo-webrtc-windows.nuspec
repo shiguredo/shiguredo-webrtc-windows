@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>webrtc.lib</id>
+    <id>shiguredo-webrtc-windows</id>
     <version>1.0.0</version>
     <authors>enm10k</authors>
     <owners>enm10k</owners>
@@ -12,10 +12,12 @@
     <description>Package description</description>
     <releaseNotes>Summary of changes made in this release of the package.</releaseNotes>
     <copyright>Copyright 2019</copyright>
-    <tags>Tag1 Tag2</tags>
+    <tags>native Tag2</tags>
   </metadata>
   <files>
-    <file src="release/webrtc.lib" target="build" />
-    <file src="include/**" target="build" />
+    <file src="release\webrtc.lib" target="build\native\libs" />
+    <file src="include\**\*.*" target="build\native\interface" />
+    <file src="*.targets" target="build\native\libs" />
+    <file src="*.props" target="build\native\libs" />
   </files>
 </package>

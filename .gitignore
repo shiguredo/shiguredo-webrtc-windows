@@ -4,3 +4,4 @@ release
 
 nuget.exe
 *.nupkg
+*.zip
