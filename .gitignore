@@ -1,3 +1,6 @@
 debug
 include
 release
+
+nuget.exe
+*.nupkg
