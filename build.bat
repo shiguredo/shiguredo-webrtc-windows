@@ -7,4 +7,5 @@ mkdir debug > NUL 2>&1
 docker cp %CONTAINER%:C:\webrtc\build_debug\obj\webrtc.lib .\debug\webrtc.lib || exit /b
 mkdir release > NUL 2>&1
 docker cp %CONTAINER%:C:\webrtc\build_release\obj\webrtc.lib .\release\webrtc.lib || exit /b
-docker-compose -f docker-compose.yml down
+docker cp %CONTAINER%:C:\webrtc\include . || exit /b
+docker-compose -f docker-compose.yml down || exit /b

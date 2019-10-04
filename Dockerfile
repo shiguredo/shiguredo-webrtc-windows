@@ -73,6 +73,11 @@ RUN ninja -C C:\webrtc\build_debug
 RUN cd webrtc\src; gn gen ..\build_release --args='is_debug=false rtc_include_tests=false rtc_use_h264=false is_component_build=false use_rtti=true'
 RUN ninja -C C:\webrtc\build_release
 
+# WebRTC のヘッダーだけを特定の場所に配置する（コンテナ外からコピーしやすくするため）
+# if 以降は、robocopy が変なエラーコードを返すのでその対策
+# ref: https://superuser.com/questions/280425/getting-robocopy-to-return-a-proper-exit-code
+RUN robocopy C:\webrtc\src C:\webrtc\include *.h *.hpp /E; if ($LastExitCode -le 1) { exit 0 } else { exit $LastExitCode }
+
 SHELL ["cmd", "/C"]
 
 ENTRYPOINT C:\BuildTools\Common7\Tools\VsDevCmd.bat &&
