@@ -5,6 +5,6 @@ services:
     build:
       context: .
       args:
-        WEBRTC_VERSION: "78"
-        WEBRTC_COMMIT: "68c715dc01cd8cd0ad2726453e7376b5f353fcd1"
-    image: shiguredo/windows-webrtc:m78-68c715dc
+        WEBRTC_VERSION: "75"
+        WEBRTC_COMMIT: "159c16f3ceea1d02d08d51fc83d843019d773ec6"
+    image: shiguredo/windows-webrtc:m75-159c16f3
