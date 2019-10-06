@@ -78,6 +78,20 @@ RUN ninja -C C:\webrtc\build_release
 # ref: https://superuser.com/questions/280425/getting-robocopy-to-return-a-proper-exit-code
 RUN robocopy C:\webrtc\src C:\webrtc\include *.h *.hpp /E; if ($LastExitCode -le 1) { exit 0 } else { exit $LastExitCode }
 
+# このままだと webrtc.lib に含まれないファイルがあるので、いくつか追加する
+RUN cd C:\webrtc\build_debug\obj; `
+  C:\BuildTools\VC\Tools\MSVC\14.23.28105\bin\Hostx64\x64\lib.exe `
+    /out:C:\webrtc\build_debug\webrtc.lib webrtc.lib `
+    api\task_queue\default_task_queue_factory\default_task_queue_factory_win.obj `
+    rtc_base\rtc_task_queue_win\task_queue_win.obj; `
+  mv C:\webrtc\build_debug\webrtc.lib C:\webrtc\build_debug\obj\webrtc.lib -Force
+RUN cd C:\webrtc\build_release\obj; `
+  C:\BuildTools\VC\Tools\MSVC\14.23.28105\bin\Hostx64\x64\lib.exe `
+    /out:C:\webrtc\build_release\webrtc.lib webrtc.lib `
+    api\task_queue\default_task_queue_factory\default_task_queue_factory_win.obj `
+    rtc_base\rtc_task_queue_win\task_queue_win.obj; `
+  mv C:\webrtc\build_release\webrtc.lib C:\webrtc\build_release\obj\webrtc.lib -Force
+
 SHELL ["cmd", "/C"]
 
 ENTRYPOINT C:\BuildTools\Common7\Tools\VsDevCmd.bat &&
