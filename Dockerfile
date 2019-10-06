@@ -16,11 +16,11 @@ SHELL ["cmd", "/S", "/C"]
 COPY Install.cmd C:\TEMP\
 ADD https://aka.ms/vscollect.exe C:\TEMP\collect.exe
 
-ARG CHANNEL_URL=https://aka.ms/vs/15/release/channel
+ARG CHANNEL_URL=https://aka.ms/vs/16/release/channel
 ADD ${CHANNEL_URL} C:\TEMP\VisualStudio.chman
 
 # 必要なコンポーネントをインストールする
-ADD https://aka.ms/vs/15/release/vs_buildtools.exe C:\TEMP\vs_buildtools.exe
+ADD https://aka.ms/vs/16/release/vs_buildtools.exe C:\TEMP\vs_buildtools.exe
 RUN C:\TEMP\Install.cmd C:\TEMP\vs_buildtools.exe --quiet --wait --norestart --nocache `
     --installPath C:\BuildTools `
     --channelUri C:\TEMP\VisualStudio.chman `
@@ -47,9 +47,9 @@ RUN choco install -y vim-console
 # WebRTC ビルドに必要な環境変数の設定
 RUN setx PYTHONIOENCODING "utf-8"
 RUN setx GYP_MSVS_OVERRIDE_PATH "C:\BuildTools"
-RUN setx GYP_MSVS_VERSION "2017"
+RUN setx GYP_MSVS_VERSION "2019"
 RUN setx DEPOT_TOOLS_WIN_TOOLCHAIN "0"
-RUN setx vs2017_install "C:\BuildTools"
+RUN setx vs2019_install "C:\BuildTools"
 RUN setx PYTHONIOENCODING "utf-8"
 
 # depot_tools
@@ -67,10 +67,10 @@ RUN cd webrtc\src; git checkout -f $env:WEBRTC_COMMIT
 RUN cd webrtc\src; gclient sync
 
 # WebRTC ビルド
-RUN cd webrtc\src; gn gen ..\build_debug --args='is_debug=true rtc_include_tests=false rtc_use_h264=false is_component_build=false use_rtti=true'
+RUN cd webrtc\src; gn gen ..\build_debug --args='is_debug=true rtc_include_tests=false rtc_use_h264=false is_component_build=false use_rtti=true use_custom_libcxx=false'
 RUN ninja -C C:\webrtc\build_debug
 
-RUN cd webrtc\src; gn gen ..\build_release --args='is_debug=false rtc_include_tests=false rtc_use_h264=false is_component_build=false use_rtti=true'
+RUN cd webrtc\src; gn gen ..\build_release --args='is_debug=false rtc_include_tests=false rtc_use_h264=false is_component_build=false use_rtti=true use_custom_libcxx=false'
 RUN ninja -C C:\webrtc\build_release
 
 # WebRTC のヘッダーだけを特定の場所に配置する（コンテナ外からコピーしやすくするため）
