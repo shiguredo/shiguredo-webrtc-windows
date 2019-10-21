@@ -2,6 +2,11 @@
 
 - libwebrtc m78@{#3}
 
+## About Support
+
+We check PRs or Issues only when written in JAPANESE.
+In other languages, we won't be able to deal with them. Thank you for your understanding.
+
 ## 概要
 
 このツールは WebRTC ライブラリを Windows 向けにビルドするツールです。
