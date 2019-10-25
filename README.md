@@ -1,6 +1,6 @@
 # Windows 向け WebRTC ライブラリ用ビルドツール
 
-- libwebrtc m78@{#3}
+- libwebrtc m78@{#8}
 
 ## About Support
 
@@ -62,7 +62,7 @@ Visual Studio のインストールに失敗した場合、`C:\vslogs.zip` に�
 Apache License 2.0
 
 ```
-Copyright 2019, Shiguredo Inc, melpon
+Copyright 2019, Shiguredo Inc, melpon and enm10k
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
