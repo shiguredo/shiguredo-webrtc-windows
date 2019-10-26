@@ -11,6 +11,8 @@
 
 ## master
 
+## m78.8.0
+
 - [ADD] NOTICE ファイルを追加
     - @voluntas
 - [UPDATE] libwebrtc M78 コミットポジション 8 に変更する
