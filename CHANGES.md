@@ -13,6 +13,11 @@
 
 ## m78.8.0
 
+- [ADD] リリース用の release.ps1 を追加
+    - release, debug, include, VERSION, NOTICE を zip して webrtc.zip を生成する
+    - @voluntas
+- [ADD] バージョン用の VERSION を追加
+    - @voluntas
 - [ADD] NOTICE ファイルを追加
     - @voluntas
 - [UPDATE] libwebrtc M78 コミットポジション 8 に変更する
