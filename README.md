@@ -12,6 +12,13 @@ In other languages, we won't be able to deal with them. Thank you for your under
 このツールは WebRTC ライブラリを Windows 向けにビルドするツールです。
 Windows on Docker を利用するため、Docker 以外のツールのインストールは不要です。
 
+## ビルド済みバイナリのダウンロード
+
+ビルド済みのバイナリを提供しています。
+
+webrtc.zip をダウンロードすればビルドは不要ですぐに利用可能です。
+
+https://github.com/shiguredo/shiguredo-webrtc-windows/releases
 
 ## 事前に必要なもの
 
