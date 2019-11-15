@@ -26,6 +26,7 @@ if ($path) {
 }
 
 $REPO_DIR = Resolve-Path "."
+$WEBRTC_DIR = "C:\webrtc"
 
 # WebRTC ビルドに必要な環境変数の設定
 $Env:GYP_MSVS_VERSION = "2019"
@@ -42,32 +43,32 @@ $Env:PATH = $Env:Path.Replace("C:\ProgramData\Chocolatey\bin;", "");
 # cp 'C:\BuildTools\Common7\IDE\Extensions\TestPlatform\Extensions\Cpp\x64\dbghelp.dll' 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\dbghelp.dll'
 
 # WebRTC のソース取得
-mkdir C:\webrtc
-Push-Location C:\webrtc
+mkdir $WEBRTC_DIR
+Push-Location $WEBRTC_DIR
   fetch webrtc
 Pop-Location
 
 Get-PSDrive
 
-Push-Location C:\webrtc\src
+Push-Location $WEBRTC_DIR\src
   git checkout -f 0b2302e5e0418b6716fbc0b3927874fd3a842caf
   gclient sync
 
   # WebRTC ビルド
   gn gen ..\build_debug --args='is_debug=true rtc_include_tests=false rtc_use_h264=false is_component_build=false use_rtti=true use_custom_libcxx=false'
-  ninja -C "C:\webrtc\build_debug"
+  ninja -C "$WEBRTC_DIR\build_debug"
 
   gn gen ..\build_release --args='is_debug=false rtc_include_tests=false rtc_use_h264=false is_component_build=false use_rtti=true use_custom_libcxx=false'
-  ninja -C "C:\webrtc\build_release"
+  ninja -C "$WEBRTC_DIR\build_release"
 Pop-Location
 
-ninja -C "C:\webrtc\build_debug" audio_device_module_from_input_and_output
-ninja -C "C:\webrtc\build_release" audio_device_module_from_input_and_output
+ninja -C "$WEBRTC_DIR\build_debug" audio_device_module_from_input_and_output
+ninja -C "$WEBRTC_DIR\build_release" audio_device_module_from_input_and_output
 
 # このままだと webrtc.lib に含まれないファイルがあるので、いくつか追加する
-Push-Location C:\webrtc\build_debug\obj
+Push-Location $WEBRTC_DIR\build_debug\obj
   lib.exe `
-    /out:C:\webrtc\build_debug\webrtc.lib webrtc.lib `
+    /out:$WEBRTC_DIR\build_debug\webrtc.lib webrtc.lib `
     api\task_queue\default_task_queue_factory\default_task_queue_factory_win.obj `
     rtc_base\rtc_task_queue_win\task_queue_win.obj `
     modules\audio_device\audio_device_module_from_input_and_output\audio_device_factory.obj `
@@ -78,11 +79,11 @@ Push-Location C:\webrtc\build_debug\obj
     modules\audio_device\windows_core_audio_utility\core_audio_utility_win.obj `
     modules\audio_device\audio_device_name\audio_device_name.obj
 Pop-Location
-Move-Item C:\webrtc\build_debug\webrtc.lib C:\webrtc\build_debug\obj\webrtc.lib -Force
+Move-Item $WEBRTC_DIR\build_debug\webrtc.lib $WEBRTC_DIR\build_debug\obj\webrtc.lib -Force
 
-Push-Location C:\webrtc\build_release\obj
+Push-Location $WEBRTC_DIR\build_release\obj
   lib.exe `
-    /out:C:\webrtc\build_release\webrtc.lib webrtc.lib `
+    /out:$WEBRTC_DIR\build_release\webrtc.lib webrtc.lib `
     api\task_queue\default_task_queue_factory\default_task_queue_factory_win.obj `
     rtc_base\rtc_task_queue_win\task_queue_win.obj `
     modules\audio_device\audio_device_module_from_input_and_output\audio_device_factory.obj `
@@ -93,14 +94,14 @@ Push-Location C:\webrtc\build_release\obj
     modules\audio_device\windows_core_audio_utility\core_audio_utility_win.obj `
     modules\audio_device\audio_device_name\audio_device_name.obj
 Pop-Location
-Move-Item C:\webrtc\build_release\webrtc.lib C:\webrtc\build_release\obj\webrtc.lib -Force
+Move-Item $WEBRTC_DIR\build_release\webrtc.lib $WEBRTC_DIR\build_release\obj\webrtc.lib -Force
 
 # WebRTC のヘッダーだけをパッケージングする
 mkdir $REPO_DIR\package
-robocopy "C:\webrtc\src" "$REPO_DIR\package\include" *.h *.hpp /S
+robocopy "$WEBRTC_DIR\src" "$REPO_DIR\package\include" *.h *.hpp /S
 mkdir $REPO_DIR\package\debug
-Copy-Item C:\webrtc\build_debug\obj\webrtc.lib $REPO_DIR\package\debug\
+Copy-Item $WEBRTC_DIR\build_debug\obj\webrtc.lib $REPO_DIR\package\debug\
 mkdir $REPO_DIR\package\release
-Copy-Item C:\webrtc\build_release\obj\webrtc.lib $REPO_DIR\package\release\
+Copy-Item $WEBRTC_DIR\build_release\obj\webrtc.lib $REPO_DIR\package\release\
 COPY-Item $REPO_DIR\VERSION $REPO_DIR\package\
 COPY-Item $REPO_DIR\NOTICE $REPO_DIR\package\
