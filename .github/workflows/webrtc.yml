@@ -12,6 +12,8 @@ jobs:
     - uses: actions/checkout@v1
     - name: Disk Cleanup
       run: |
+        Get-PSDrive
+
         # Cache 済み Docker Image の削除
         docker rmi $(docker images -q -a)
 
@@ -23,6 +25,9 @@ jobs:
         Remove-Item -Recurse -Force $Env:JAVA_HOME_11_X64
         Remove-Item -Recurse -Force $Env:JAVA_HOME_8_X64
         Remove-Item -Recurse -Force $Env:JAVA_HOME_7_X64
+
+        Get-PSDrive
+
     - name: gabuild.bat
       run: .\gabuild.bat
     - name: Upload Windows Artifact

@@ -47,6 +47,8 @@ Push-Location webrtc
   fetch webrtc
 Pop-Location
 
+Get-PSDrive
+
 Push-Location webrtc\src
   git checkout -f 0b2302e5e0418b6716fbc0b3927874fd3a842caf
   gclient sync
