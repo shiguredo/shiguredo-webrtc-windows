@@ -1,0 +1,19 @@
+name: Build WebRTC for Windows
+
+on:
+  push:
+  schedule:
+  - cron: "0 0 * * *"
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: gabuild.bat
+      run: .\gabuild.bat
+    - name: Upload Windows Artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: webrtc
+        path: package
