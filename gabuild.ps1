@@ -34,7 +34,7 @@ $Env:PYTHONIOENCODING = "utf-8"
 
 # depot_tools
 git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
-$Env:PATH = "$REPO_DIR\depot_tools;$Env:PATH"
+setx PATH "$REPO_DIR\depot_tools;$Env:PATH"
 
 # dbghelp.dll が無いと怒られてしまうので所定の場所にコピーする
 # mkdir 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64'
