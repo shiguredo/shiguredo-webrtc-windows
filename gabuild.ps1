@@ -1,5 +1,3 @@
-$ErrorActionPreference = 'Stop'
-
 if (Test-Path vswhere.exe) {
     Remove-Item vswhere.exe -Force
 }
@@ -35,7 +33,7 @@ $Env:DEPOT_TOOLS_WIN_TOOLCHAIN = "0"
 $Env:PYTHONIOENCODING = "utf-8"
 
 # depot_tools
-git clone -q https://chromium.googlesource.com/chromium/tools/depot_tools.git
+git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
 $Env:PATH = "$REPO_DIR\depot_tools;$Env:PATH"
 
 # dbghelp.dll が無いと怒られてしまうので所定の場所にコピーする
