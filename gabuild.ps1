@@ -96,12 +96,43 @@ Push-Location $WEBRTC_DIR\build_release\obj
 Pop-Location
 Move-Item $WEBRTC_DIR\build_release\webrtc.lib $WEBRTC_DIR\build_release\obj\webrtc.lib -Force
 
-# WebRTC のヘッダーだけをパッケージングする
+# WebRTC のヘッダーだけをパッケージに含める
 mkdir $REPO_DIR\package
 robocopy "$WEBRTC_DIR\src" "$REPO_DIR\package\include" *.h *.hpp /S
+
+# webrtc.lib をパッケージに含める
 mkdir $REPO_DIR\package\debug
 Copy-Item $WEBRTC_DIR\build_debug\obj\webrtc.lib $REPO_DIR\package\debug\
 mkdir $REPO_DIR\package\release
 Copy-Item $WEBRTC_DIR\build_release\obj\webrtc.lib $REPO_DIR\package\release\
+
+# WebRTC の各種バージョンをパッケージに含める
+New-Item -Type File $REPO_DIR\package\VERSIONS
+Push-Location $WEBRTC_DIR\src
+  Write-Output "WEBRTC_SRC_COMMIT=$(git rev-parse HEAD)" >> $REPO_DIR\package\VERSIONS
+Pop-Location
+Push-Location $WEBRTC_DIR\src\build
+  Write-Output "WEBRTC_SRC_BUILD_COMMIT=$(git rev-parse HEAD)" >> $REPO_DIR\package\VERSIONS
+Pop-Location
+Push-Location $WEBRTC_DIR\src\buildtools
+  Write-Output "WEBRTC_SRC_BUILDTOOLS_COMMIT=$(git rev-parse HEAD)" >> $REPO_DIR\package\VERSIONS
+Pop-Location
+Push-Location $WEBRTC_DIR\src\buildtools\third_party\libc++\trunk
+  Write-Output "WEBRTC_SRC_BUILDTOOLS_THIRD_PARTY_LIBCXX_TRUNK=$(git rev-parse HEAD)" >> $REPO_DIR\package\VERSIONS
+Pop-Location
+Push-Location $WEBRTC_DIR\src\buildtools\third_party\libc++abi\trunk
+  Write-Output "WEBRTC_SRC_BUILDTOOLS_THIRD_PARTY_LIBCXXABI_TRUNK=$(git rev-parse HEAD)" >> $REPO_DIR\package\VERSIONS
+Pop-Location
+Push-Location $WEBRTC_DIR\src\buildtools\third_party\libunwind\trunk
+  Write-Output "WEBRTC_SRC_BUILDTOOLS_THIRD_PARTY_LIBUNWIND_TRUNK=$(git rev-parse HEAD)" >> $REPO_DIR\package\VERSIONS
+Pop-Location
+Push-Location $WEBRTC_DIR\src\third_party
+  Write-Output "WEBRTC_SRC_THIRD_PARTY_COMMIT=$(git rev-parse HEAD)" >> $REPO_DIR\package\VERSIONS
+Pop-Location
+Push-Location $WEBRTC_DIR\src\tools
+  Write-Output "WEBRTC_SRC_TOOLS_COMMIT=$(git rev-parse HEAD)" >> $REPO_DIR\package\VERSIONS
+Pop-Location
+
+# その他のファイル
 COPY-Item $REPO_DIR\VERSION $REPO_DIR\package\
 COPY-Item $REPO_DIR\NOTICE $REPO_DIR\package\
