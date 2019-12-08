@@ -11,6 +11,13 @@
 
 ## master
 
+## m78.8.1
+
+- [ADD] ビルドを GitHub Actions に対応
+    - @melpon
+- [ADD] WebRTC の各種バージョンを記述した VERSIONS をパッケージに追加
+    - @melpon
+
 ## m78.8.0
 
 - [ADD] リリース用の release.ps1 を追加
